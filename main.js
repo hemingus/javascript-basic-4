@@ -23,23 +23,86 @@ function randomColor() {
 
 const diceContainer = document.getElementById("dice-container");
 const rollDiceButton = document.getElementById("roll-dice-button");
+const statsContainer = document.getElementById("stats-container");
+let rollStats = {
+    six: 0,
+    five: 0,
+    four: 0,
+    three: 0,
+    two: 0,
+    one: 0
+}
+
+function resetRollStats() {
+    rollStats = {
+        six: 0,
+        five: 0,
+        four: 0,
+        three: 0,
+        two: 0,
+        one: 0
+    }
+}
+
+function incrementRollStats(roll) {
+    switch (roll) {
+        case 1: {
+            rollStats.one++;
+            break;
+        }
+        case 2: {
+            rollStats.two++;
+            break;
+        }
+        case 3: {
+            rollStats.three++;
+            break;
+        }
+        case 4: {
+            rollStats.four++;
+            break;
+        }
+        case 5: {
+            rollStats.five++;
+            break;
+        }
+        case 6: {
+            rollStats.six++;
+            break;
+        }
+        default: {
+            console.log("No such dice value...");
+        }
+    }
+}
 
 function rollDice(numDice) {
+    statsContainer.replaceChildren();
     diceContainer.replaceChildren();
+    resetRollStats();
     for (let i = 0; i < numDice; i++) {
         const roll = Math.floor(Math.random() * 6) + 1
-        const newDice = document.createElement("div");
-        newDice.id = `dice-${i}`;
-        newDice.classList.add("dice", "roll");
-        newDice.style.background = `linear-gradient(to top right, ${diceColors[1]}, ${diceColors[0]}, ${diceColors[1]})`
-        createDiceDots(roll, newDice);
-        diceContainer.appendChild(newDice);
+        incrementRollStats(roll);
+        const newDie = createDie(`die-${i}`, roll, ...diceColors);
+        diceContainer.appendChild(newDie);
     }
-    setTimeout(() => newDice.classList.remove("roll"), 300);
-} 
+    generateStats();
+}
 
-// Function that creates dots on the dice depending on its value
-function createDiceDots(num, dice) {
+function generateStats() {
+    for (let stat in rollStats) {
+        const statParagraph = document.createElement("p");
+        statParagraph.textContent = `${stat}: ${rollStats[stat]}`
+        statsContainer.appendChild(statParagraph);
+    }
+}
+
+function createDie(id, numDots, primaryColor, secondaryColor) {
+    const Die = document.createElement("div");
+    Die.id = id;
+    Die.classList.add("dice", "roll");
+    Die.style.background = `linear-gradient(to top right, ${secondaryColor}, ${primaryColor}, ${secondaryColor})`
+
     const dotPositions = {
         1: [5],
         2: [1, 9],
@@ -49,12 +112,14 @@ function createDiceDots(num, dice) {
         6: [1, 3, 4, 6, 7, 9],
     };
 
-    dotPositions[num].forEach((pos) => {
+    dotPositions[numDots].forEach((pos) => {
         const dot = document.createElement("div");
         dot.classList.add("dot")
         dot.style.gridArea = getGridArea(pos);
-        dice.appendChild(dot);
+        Die.appendChild(dot);
     });
+
+    return Die
 }
 
 // Function that maps each dot position to grid area

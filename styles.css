@@ -64,6 +64,16 @@ h1 {
     border-radius: 20px;
 }
 
+#stats-container {
+    background: black;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+#stats-container p {
+    color: white;
+}
+
 @media (max-width: 480px) {
     #dice-container {
         display: flex;
@@ -92,8 +102,4 @@ h1 {
     height: clamp(5px, 1vw, 15px);
     background: white;
     border-radius: 50%;
-}
-
-.dice.roll {
-    transform: rotate(360deg);
 }
