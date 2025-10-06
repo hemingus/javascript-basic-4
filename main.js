@@ -1,14 +1,18 @@
 // Main js file
-
+let dicePrimary = "black";
+let diceSecondary = "grey"
 const diceContainer = document.getElementById("dice-container");
 const rollDiceButton = document.getElementById("roll-dice-button");
 
 function rollDice(numDice) {
+    diceContainer.replaceChildren();
     for (let i = 0; i < numDice; i++) {
         const roll = Math.floor(Math.random() * 6) + 1
+
         const newDice = document.createElement("div");
         newDice.id = `dice-${i}`;
         newDice.classList.add("dice", "roll");
+        newDice.style.background = `linear-gradient(to top right, ${diceSecondary}, ${dicePrimary} ,${diceSecondary})`
         createDiceDots(roll, newDice);
         diceContainer.appendChild(newDice);
     }
@@ -41,4 +45,8 @@ function getGridArea(pos) {
     return `${row} / ${col} / ${row + 1} / ${col + 1}`;
 }
 
-rollDiceButton.addEventListener("click", () => rollDice(5));
+rollDiceButton.addEventListener("click", () => {
+    let diceCount = parseInt(document.getElementById("dice-count").value, 10);
+    if (isNaN(diceCount)) diceCount = 1;
+    rollDice(diceCount);
+    })
