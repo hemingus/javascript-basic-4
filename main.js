@@ -8,7 +8,7 @@ const diceThemes = [
     { primary: "indigo", secondary: "darkviolet" },
 ];
 
-let diceColors = ["darkred", "red"];
+let diceColors = [diceThemes[0].primary, diceThemes[0].secondary];
 
 function setDiceColors(primary, secondary) {
     diceColors = [primary, secondary];
@@ -28,7 +28,6 @@ function rollDice(numDice) {
     diceContainer.replaceChildren();
     for (let i = 0; i < numDice; i++) {
         const roll = Math.floor(Math.random() * 6) + 1
-
         const newDice = document.createElement("div");
         newDice.id = `dice-${i}`;
         newDice.classList.add("dice", "roll");
