@@ -1,0 +1,58 @@
+// css styles
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(#333, black);
+  min-height: 100svh;
+}
+
+h1 {
+    color: white;
+}
+
+#dice-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 20px;
+  background: black;
+
+}
+
+.dice {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(to top right, red, darkred, red);
+  border: 2px solid #333;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  padding: 10px;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  background: gold;
+  border-radius: 50%;
+}
+
+.dice.roll {
+  transform: rotate(360deg);
+}
