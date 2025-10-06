@@ -8,17 +8,22 @@
     <script src="main.js" defer></script>
 </head>
 <body>
-    <h1>Dice game</h1>
-    <label for="dice-count">Number of dice (1–40):</label>
-    <input 
-        type="number" 
-        id="dice-count" 
-        name="dice-count" 
-        min="1" 
-        max="40" 
-        value="1"
-    />
-    <button id="roll-dice-button">Roll dice</button>
-    <div id="dice-container"></div>
+    <main>
+        <h1>Dice game</h1>
+        <label for="dice-count">Number of dice (1–40):</label>
+        <input 
+            type="number" 
+            id="dice-count" 
+            name="dice-count" 
+            min="1" 
+            max="40" 
+            value="1"
+        />
+        <h2>Pick a dice theme</h2>
+        <div id="dice-theme-container"></div>
+        <button id="roll-dice-button">Roll dice</button>
+        <div id="dice-container"></div>
+        <div id="dice-stats-container"></div>
+    </main>
 </body>
 </html>

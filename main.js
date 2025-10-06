@@ -1,6 +1,26 @@
 // Main js file
-let dicePrimary = "black";
-let diceSecondary = "grey"
+
+const diceThemes = [
+    { primary: "black", secondary: "grey" },
+    { primary: "darkred", secondary: "red" },
+    { primary: "darkblue", secondary: "blue" },
+    { primary: "darkgreen", secondary: "limegreen" },
+    { primary: "indigo", secondary: "darkviolet" },
+];
+
+let diceColors = ["darkred", "red"];
+
+function setDiceColors(primary, secondary) {
+    diceColors = [primary, secondary];
+}
+
+function randomColor() {
+    let r = Math.floor(Math.random() * 256);
+    let g = Math.floor(Math.random() * 256);
+    let b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
 const diceContainer = document.getElementById("dice-container");
 const rollDiceButton = document.getElementById("roll-dice-button");
 
@@ -12,7 +32,7 @@ function rollDice(numDice) {
         const newDice = document.createElement("div");
         newDice.id = `dice-${i}`;
         newDice.classList.add("dice", "roll");
-        newDice.style.background = `linear-gradient(to top right, ${diceSecondary}, ${dicePrimary} ,${diceSecondary})`
+        newDice.style.background = `linear-gradient(to top right, ${diceColors[1]}, ${diceColors[0]}, ${diceColors[1]})`
         createDiceDots(roll, newDice);
         diceContainer.appendChild(newDice);
     }
@@ -44,6 +64,28 @@ function getGridArea(pos) {
     const col = pos % 3 === 0 ? 3 : pos % 3;
     return `${row} / ${col} / ${row + 1} / ${col + 1}`;
 }
+
+const diceThemesContainer = document.getElementById("dice-theme-container");
+let activeThemeButton = null;
+
+for (let theme of diceThemes) {
+    const themeButton = document.createElement("button");
+    themeButton.id = `${theme.primary}${theme.secondary}`;
+    themeButton.classList.add("theme-button");
+    themeButton.style.background = `linear-gradient(to top right, ${theme.secondary}, ${theme.primary}, ${theme.secondary})`;
+    themeButton.addEventListener("click", () => {
+        setDiceColors(theme.primary, theme.secondary);
+        if (activeThemeButton) {
+        activeThemeButton.classList.remove("active");
+        }
+        themeButton.classList.add("active");
+        activeThemeButton = themeButton;
+    })
+    diceThemesContainer.appendChild(themeButton);
+}
+
+diceThemesContainer.firstElementChild.classList.add("active");
+activeThemeButton = diceThemesContainer.firstElementChild;
 
 rollDiceButton.addEventListener("click", () => {
     let diceCount = parseInt(document.getElementById("dice-count").value, 10);
