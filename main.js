@@ -24,65 +24,22 @@ function randomColor() {
 const diceContainer = document.getElementById("dice-container");
 const rollDiceButton = document.getElementById("roll-dice-button");
 const statsContainer = document.getElementById("stats-container");
-let rollStats = {
-    six: 0,
-    five: 0,
-    four: 0,
-    three: 0,
-    two: 0,
-    one: 0
-}
+let totalDiceValue = 0;
+let rollStats = [0, 0, 0, 0, 0, 0];
 
-function resetRollStats() {
-    rollStats = {
-        six: 0,
-        five: 0,
-        four: 0,
-        three: 0,
-        two: 0,
-        one: 0
-    }
-}
-
-function incrementRollStats(roll) {
-    switch (roll) {
-        case 1: {
-            rollStats.one++;
-            break;
-        }
-        case 2: {
-            rollStats.two++;
-            break;
-        }
-        case 3: {
-            rollStats.three++;
-            break;
-        }
-        case 4: {
-            rollStats.four++;
-            break;
-        }
-        case 5: {
-            rollStats.five++;
-            break;
-        }
-        case 6: {
-            rollStats.six++;
-            break;
-        }
-        default: {
-            console.log("No such dice value...");
-        }
-    }
+function resetStats() {
+    totalDiceValue = 0;
+    rollStats = [0, 0, 0, 0, 0, 0]
 }
 
 function rollDice(numDice) {
     statsContainer.replaceChildren();
     diceContainer.replaceChildren();
-    resetRollStats();
+    resetStats();
     for (let i = 0; i < numDice; i++) {
         const roll = Math.floor(Math.random() * 6) + 1
-        incrementRollStats(roll);
+        totalDiceValue += roll;
+        rollStats[roll-1] += 1;
         const newDie = createDie(`die-${i}`, roll, ...diceColors);
         diceContainer.appendChild(newDie);
     }
@@ -90,11 +47,20 @@ function rollDice(numDice) {
 }
 
 function generateStats() {
-    for (let stat in rollStats) {
-        const statParagraph = document.createElement("p");
-        statParagraph.textContent = `${stat}: ${rollStats[stat]}`
-        statsContainer.appendChild(statParagraph);
+    const totalValue = document.createElement("h3");
+    totalValue.textContent = `${totalDiceValue}`;
+    for (let [i, stat] of rollStats.entries()) {
+        if (stat > 0) {
+            const rowContainer = document.createElement("div");
+            rowContainer.classList.add("stat-row");
+            const Die = createDie(`stat-${stat}`, i+1, ...diceColors);
+            const statParagraph = document.createElement("p");
+            rowContainer.append(Die, statParagraph);
+            statParagraph.textContent = `${stat}`
+            statsContainer.appendChild(rowContainer);
+        }
     }
+    statsContainer.appendChild(totalValue);
 }
 
 function createDie(id, numDots, primaryColor, secondaryColor) {
