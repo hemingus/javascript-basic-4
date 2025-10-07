@@ -24,6 +24,7 @@ function randomColor() {
 const diceContainer = document.getElementById("dice-container");
 const rollDiceButton = document.getElementById("roll-dice-button");
 const statsContainer = document.getElementById("stats-container");
+const diceCount = document.querySelector("#dice-count");
 let totalDiceValue = 0;
 let rollStats = [0, 0, 0, 0, 0, 0];
 
@@ -117,8 +118,20 @@ for (let theme of diceThemes) {
 diceThemesContainer.firstElementChild.classList.add("active");
 activeThemeButton = diceThemesContainer.firstElementChild;
 
-rollDiceButton.addEventListener("click", () => {
+function handleRollDice() {
     let diceCount = parseInt(document.getElementById("dice-count").value, 10);
-    if (isNaN(diceCount)) diceCount = 1;
-    rollDice(diceCount);
+    if (isNaN(diceCount) || diceCount < 1 || diceCount > 200) {
+        alert("Dice count must be a number between 1 and 200.");
+    } else {
+        rollDice(diceCount);
+    }  
+}
+
+rollDiceButton.addEventListener("click", () => handleRollDice());
+
+
+diceCount.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.repeat) {
+            handleRollDice();
+        }
     })
