@@ -10,17 +10,21 @@
 <body>
     <main>
         <h1>Dice Machine</h1>
-        <label for="dice-count">Number of dice (1–40):</label>
-        <input 
-            type="number" 
-            id="dice-count" 
-            name="dice-count" 
-            min="1" 
-            max="40" 
-            value="1"
-        />
-        <h2>Pick a dice theme</h2>
-        <div id="dice-theme-container"></div>
+        <div class="label-group">
+            <label for="dice-count">Number of dice (1–200):</label>
+            <input 
+                type="number" 
+                id="dice-count" 
+                name="dice-count" 
+                min="1" 
+                max="40" 
+                value="1"
+            />
+        </div>
+        <div class="label-group">
+            <label for="dice-theme-container">Select dice theme</label>
+            <div id="dice-theme-container"></div>
+        </div>
         <button id="roll-dice-button">Roll dice</button>
         <div id="dice-container"></div>
         <div id="stats-container"></div>
