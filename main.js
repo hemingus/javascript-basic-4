@@ -8,6 +8,8 @@ const diceThemes = [
     { primary: "indigo", secondary: "darkviolet" },
 ];
 
+const diceSound = new Audio("./assets/diceroll.mp3");
+
 let diceColors = [diceThemes[0].primary, diceThemes[0].secondary];
 
 function setDiceColors(primary, secondary) {
@@ -34,6 +36,8 @@ function resetStats() {
 }
 
 function rollDice(numDice) {
+    diceSound.currentTime = 0;
+    diceSound.play()
     statsContainer.replaceChildren();
     diceContainer.replaceChildren();
     resetStats();
@@ -119,6 +123,7 @@ diceThemesContainer.firstElementChild.classList.add("active");
 activeThemeButton = diceThemesContainer.firstElementChild;
 
 function handleRollDice() {
+
     let diceCount = parseInt(document.getElementById("dice-count").value, 10);
     if (isNaN(diceCount) || diceCount < 1 || diceCount > 200) {
         alert("Dice count must be a number between 1 and 200.");

@@ -18,15 +18,30 @@ body {
     margin: 0;
 }
 
+header {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100dvw;
+    background: linear-gradient(#999 -50%, black);
+}
+
 main {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2vw;
+    gap: clamp(1.5rem, 2vw, 3rem);
+}
+
+img {
+    height: clamp(40px, 60px, 80px);
+    mix-blend-mode: screen;
 }
 
 h1 {
+    font-size: clamp(1.5rem, 2vw, 2rem);
     color: lightgoldenrodyellow;
     border: 1px solid gold;
     border-radius: 50%;
